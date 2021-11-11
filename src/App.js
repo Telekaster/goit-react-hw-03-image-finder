@@ -49,16 +49,17 @@ class App extends Component {
   openLargeImage = (e) => {
     this.setState({ modal: true });
 
-    axios
-      .get(
-        `https://pixabay.com/api/?q=${this.state.value}&page=${this.state.page}&key=23539275-fb90155ac37cf87d4395ca2a5&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then((response) => {
-        const largeImage = response.data.hits.find(
-          (item) => item.id === Number(e.target.parentNode.id)
-        );
-        return this.setState({ largeImage: largeImage });
-      });
+    const largeImage = this.state.images.find(
+      (item) => item.id === Number(e.target.parentNode.id)
+    );
+
+    return this.setState({ largeImage: largeImage });
+  };
+
+  closeModal = (e) => {
+    if (e.target.className === "Overlay") {
+      this.setState({ modal: false, largeImage: "" });
+    }
   };
 
   componentDidUpdate() {
@@ -83,7 +84,7 @@ class App extends Component {
               color="#00BFFF"
               height={100}
               width={100}
-              timeout={3000} //3 secs
+              timeout={3000}
             />
           </div>
         ) : (
@@ -93,7 +94,10 @@ class App extends Component {
         {this.state.images.length !== 0 && (
           <Button onClick={this.loadMoreImages} />
         )}
-        {this.state.modal === true && <Modal image={this.state.largeImage} />}
+        ;
+        {this.state.modal === true && (
+          <Modal image={this.state.largeImage} onClick={this.closeModal} />
+        )}
       </>
     );
   }

@@ -1,8 +1,8 @@
 import React from "react";
 
-function Modal({ image }) {
+function Modal({ image, onClick }) {
   return (
-    <div className="Overlay">
+    <div className="Overlay" onClick={onClick}>
       <div className="Modal">
         <img src={image.largeImageURL} alt={image.tags} />
       </div>

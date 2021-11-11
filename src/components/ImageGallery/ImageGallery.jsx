@@ -1,19 +1,11 @@
 import React from "react";
+import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
 function ImageGallery({ state, onClick }) {
   return (
     <ul className="ImageGallery">
       {state.images.map((item) => {
-        return (
-          <li id={item.id}>
-            <img
-              src={item.webformatURL}
-              alt={item.id}
-              className="ImageGalleryItem-image"
-              onClick={onClick}
-            />
-          </li>
-        );
+        return <ImageGalleryItem item={item} onClick={onClick} />;
       })}
     </ul>
   );
