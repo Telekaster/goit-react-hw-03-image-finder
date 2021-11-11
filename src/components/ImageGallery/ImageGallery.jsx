@@ -1,6 +1,6 @@
 import React from "react";
 
-function ImageGallery({ state }) {
+function ImageGallery({ state, onClick }) {
   return (
     <ul className="ImageGallery">
       {state.images.map((item) => {
@@ -10,6 +10,7 @@ function ImageGallery({ state }) {
               src={item.webformatURL}
               alt={item.id}
               className="ImageGalleryItem-image"
+              onClick={onClick}
             />
           </li>
         );

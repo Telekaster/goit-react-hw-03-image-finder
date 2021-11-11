@@ -4,6 +4,7 @@ import Loader from "react-loader-spinner";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Button from "./components/Button/Button";
+import Modal from "./components/Modal/Modal";
 
 class App extends Component {
   state = {
@@ -11,6 +12,8 @@ class App extends Component {
     page: 1,
     images: [],
     loaded: "",
+    modal: false,
+    largeImage: "",
   };
 
   handleChange = (e) => {
@@ -43,7 +46,20 @@ class App extends Component {
       });
   };
 
-  componentDidMount() {}
+  openLargeImage = (e) => {
+    this.setState({ modal: true });
+
+    axios
+      .get(
+        `https://pixabay.com/api/?q=${this.state.value}&page=${this.state.page}&key=23539275-fb90155ac37cf87d4395ca2a5&image_type=photo&orientation=horizontal&per_page=12`
+      )
+      .then((response) => {
+        const largeImage = response.data.hits.find(
+          (item) => item.id === Number(e.target.parentNode.id)
+        );
+        return this.setState({ largeImage: largeImage });
+      });
+  };
 
   componentDidUpdate() {
     window.scrollTo({
@@ -71,12 +87,13 @@ class App extends Component {
             />
           </div>
         ) : (
-          <ImageGallery state={this.state} />
+          <ImageGallery state={this.state} onClick={this.openLargeImage} />
         )}
         ;
         {this.state.images.length !== 0 && (
           <Button onClick={this.loadMoreImages} />
         )}
+        {this.state.modal === true && <Modal image={this.state.largeImage} />}
       </>
     );
   }
