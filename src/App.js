@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Searchbar from "./components/Searchbar/Searchbar";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
 
 class App extends Component {
   state = {
@@ -23,15 +24,18 @@ class App extends Component {
       });
   };
 
-  componentDidMount() {}
+  // componentDidUpdate(prevState) {}
 
   render() {
     return (
-      <Searchbar
-        onChange={this.handleChange}
-        onClick={this.searchImages}
-        state={this.state}
-      />
+      <>
+        <Searchbar
+          onChange={this.handleChange}
+          onClick={this.searchImages}
+          state={this.state}
+        />
+        <ImageGallery state={this.state} />
+      </>
     );
   }
 }
