@@ -6,7 +6,11 @@ function ImageGallery({ state }) {
       {state.images.map((item) => {
         return (
           <li id={item.id}>
-            <img src={item.webformatURL} alt={item.id} />
+            <img
+              src={item.webformatURL}
+              alt={item.id}
+              className="ImageGalleryItem-image"
+            />
           </li>
         );
       })}
