@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Loader from "react-loader-spinner";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Button from "./components/Button/Button";
@@ -9,6 +10,7 @@ class App extends Component {
     value: "",
     page: 1,
     images: [],
+    loaded: "",
   };
 
   handleChange = (e) => {
@@ -16,14 +18,14 @@ class App extends Component {
   };
 
   searchImages = (e) => {
-    this.setState({ page: 1 });
+    this.setState({ images: [], page: 1, loaded: false });
 
     axios
       .get(
         `https://pixabay.com/api/?q=${this.state.value}&page=${this.state.page}&key=23539275-fb90155ac37cf87d4395ca2a5&image_type=photo&orientation=horizontal&per_page=12`
       )
       .then((response) => {
-        return this.setState({ images: response.data.hits });
+        return this.setState({ images: response.data.hits, loaded: true });
       });
   };
 
@@ -41,6 +43,8 @@ class App extends Component {
       });
   };
 
+  componentDidMount() {}
+
   componentDidUpdate() {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
@@ -56,8 +60,23 @@ class App extends Component {
           onClick={this.searchImages}
           state={this.state}
         />
-        <ImageGallery state={this.state} />
-        <Button onClick={this.loadMoreImages} />
+        {this.state.loaded === false ? (
+          <div className="loader">
+            <Loader
+              type="Puff"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              timeout={3000} //3 secs
+            />
+          </div>
+        ) : (
+          <ImageGallery state={this.state} />
+        )}
+        ;
+        {this.state.images.length !== 0 && (
+          <Button onClick={this.loadMoreImages} />
+        )}
       </>
     );
   }
