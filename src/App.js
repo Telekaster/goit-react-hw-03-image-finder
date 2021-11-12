@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import sendUrl from "./servises";
+import sendUrl from "./services";
 import Loader from "react-loader-spinner";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
