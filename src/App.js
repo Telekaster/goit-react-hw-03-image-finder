@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import sendUrl from "./servises";
 import Loader from "react-loader-spinner";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
@@ -23,13 +24,9 @@ class App extends Component {
   searchImages = (e) => {
     this.setState({ images: [], page: 1, loaded: false });
 
-    axios
-      .get(
-        `https://pixabay.com/api/?q=${this.state.value}&page=${this.state.page}&key=23539275-fb90155ac37cf87d4395ca2a5&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then((response) => {
-        return this.setState({ images: response.data.hits, loaded: true });
-      });
+    axios.get(sendUrl(this.state.value, this.state.page)).then((response) => {
+      return this.setState({ images: response.data.hits, loaded: true });
+    });
   };
 
   loadMoreImages = () => {
@@ -37,13 +34,9 @@ class App extends Component {
     this.setState({ page: page + 1 });
     const oldState = this.state.images;
 
-    axios
-      .get(
-        `https://pixabay.com/api/?q=${this.state.value}&page=${this.state.page}&key=23539275-fb90155ac37cf87d4395ca2a5&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then((response) => {
-        return this.setState({ images: [...oldState, ...response.data.hits] });
-      });
+    axios.get(sendUrl(this.state.value, this.state.page)).then((response) => {
+      return this.setState({ images: [...oldState, ...response.data.hits] });
+    });
   };
 
   openLargeImage = (e) => {
