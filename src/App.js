@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import sendRequest from "./services/api";
-import loadMoreImg from "./services/loadMoreImg";
 import Loader from "react-loader-spinner";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
@@ -22,17 +21,16 @@ class App extends Component {
   };
 
   searchImages = (e) => {
-    this.setState({ images: [], page: 1, loaded: false });
+    this.setState({ images: [], page: 2, loaded: false });
 
-    sendRequest(this.state.value, this.state.page, this);
+    sendRequest(this.state.value, this.state.page, this, this.state.images);
   };
 
   loadMoreImages = () => {
     const page = this.state.page;
     this.setState({ page: page + 1 });
-    const oldState = this.state.images;
 
-    loadMoreImg(this.state.value, this.state.page, oldState, this);
+    sendRequest(this.state.value, this.state.page, this, this.state.images);
   };
 
   openLargeImage = (e) => {
