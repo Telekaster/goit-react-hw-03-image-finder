@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export default function sendRequest(value, page, state, prevState) {
-  const baseUrl = "https://pixabay.com/api/";
-  const apiKey = "23539275-fb90155ac37cf87d4395ca2a5";
+const baseUrl = "https://pixabay.com/api/";
+const apiKey = "23539275-fb90155ac37cf87d4395ca2a5";
 
+export default function sendRequest(value, page, state, prevState) {
   axios
     .get(
       `${baseUrl}?q=${value}&page=${page}&key=${apiKey}&image_type=photo&orientation=horizontal&per_page=12`
